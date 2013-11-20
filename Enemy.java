@@ -1,7 +1,7 @@
 public class Enemy {
 
 	private String Type, Name;
-	private int Height, Weight, Health, MaxHealth, Armour, MaxArmour;
+	private int Height, Weight, Health, MaxHealth, Armour, MaxArmour, Damage;
 	public String getType() {
 		return Type;
 	}
@@ -78,5 +78,6 @@ public class Enemy {
 		MaxHealth = 50;
 		Armour = 25;
 		MaxArmour = 25;
+		Damage = 10;
 	}
 }
