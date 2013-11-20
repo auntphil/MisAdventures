@@ -22,7 +22,6 @@ public class MisAdventuresGameLayout extends JFrame {
 	// PlayerStat Panel Setup
 	private JPanel PlayerInfo = new JPanel();
 	private JLabel Health, Armour, PlayerStatTitle;
-	private JButton calculateB;
 
 	// Location Panel Setup
 	private JPanel location = new JPanel();
@@ -39,8 +38,13 @@ public class MisAdventuresGameLayout extends JFrame {
 	private JPanel Encounter = new JPanel();
 	private JLabel EncounterTitle, EncounterType, EncounterName,
 			EncounterHeight, EncounterWeight, EncHBar, EncABar;
+	
+	// Action Panel Setup
+	private JPanel ActionWindow = new JPanel();
+	private JLabel ActionTitle;
+	private JButton ActionButton;
+	private ActionButtonHandler abHandler;
 
-	private CalculateButtonHandler cbHandler;
 
 	public MisAdventuresGameLayout() {
 	}
@@ -56,6 +60,7 @@ public class MisAdventuresGameLayout extends JFrame {
 		UpdatePlayerStats();
 		UpdateLocation();
 		UpdateEncounter();
+		UpdateActionWindow();
 	}
 
 	public void gameLayout() {
@@ -90,6 +95,11 @@ public class MisAdventuresGameLayout extends JFrame {
 		EncounterHealth.setBorder(BorderFactory.createLineBorder(Color.black));
 		EncounterHealth.setBounds(456, 17, 197, 65);
 
+		// ActionWindow Panel Construction
+		ActionWindow.setLayout(new BoxLayout(ActionWindow, BoxLayout.X_AXIS));
+		ActionWindow.setBorder(BorderFactory.createLineBorder(Color.black));
+		ActionWindow.setBounds(255, 89, 400, 65);
+		
 		// Adding Panels to the Game Frame
 		game.setContentPane(parent);
 		parent.add(location);
@@ -97,7 +107,8 @@ public class MisAdventuresGameLayout extends JFrame {
 		parent.add(Encounter);
 		parent.add(EncounterHealth);
 		parent.add(EncounterParent);
-
+		parent.add(ActionWindow);
+		
 		// Encounter Stats Initialization
 		EncounterTitle = new JLabel("");
 		EncounterType = new JLabel("");
@@ -138,6 +149,10 @@ public class MisAdventuresGameLayout extends JFrame {
 		PlayerInfo.add(PlayerStatTitle);
 		PlayerInfo.add(Health);
 		PlayerInfo.add(Armour);
+		
+		// ActionWindow Initialization
+		ActionTitle = new JLabel("Action Window");
+		ActionWindow.add(ActionTitle);
 
 	}
 
@@ -230,19 +245,26 @@ public class MisAdventuresGameLayout extends JFrame {
 					+ p1.getPlayerMaxArmour());
 		Armour.setAlignmentX(CENTER_ALIGNMENT);
 
-		// Button for Testing
-		calculateB = new JButton("Trip on stick");
-		cbHandler = new CalculateButtonHandler();
-		calculateB.addActionListener(cbHandler);
-		calculateB.setAlignmentX(CENTER_ALIGNMENT);
-
 		// Add to Panel
 		PlayerInfo.add(Health);
 		PlayerInfo.add(Armour);
-		PlayerInfo.add(calculateB);
 
 		PlayerInfo.revalidate();
 		PlayerInfo.repaint();
+	}
+	
+	public void UpdateActionWindow(){
+		
+		// Action Button
+		ActionButton = new JButton("Attack " + Enemy.getName() + " " + Enemy.getType());
+		abHandler = new ActionButtonHandler();
+		ActionButton.addActionListener(abHandler);
+		ActionButton.setAlignmentX(CENTER_ALIGNMENT);
+		
+		ActionWindow.add(ActionButton);
+		
+		ActionWindow.revalidate();
+		ActionWindow.repaint();
 	}
 
 	// Make Window Visible and initialize it
@@ -255,12 +277,12 @@ public class MisAdventuresGameLayout extends JFrame {
 	}
 
 	// Start Button Action
-	private class CalculateButtonHandler implements ActionListener {
+	private class ActionButtonHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			int ArmourDurability = 11;
 			p1.DamagePlayerHealth(Enemy.getDamage());
 			p1.DamagePlayerArmour(Enemy.getDamage(), ArmourDurability);
-			PlayerInfo.remove(calculateB);
+			PlayerInfo.remove(ActionButton);
 			UpdatePlayerStats();
 
 		}
