@@ -257,12 +257,9 @@ public class MisAdventuresGameLayout extends JFrame {
 	// Start Button Action
 	private class CalculateButtonHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			int DamageTaken = 10;
-			int ArmourStrength = 11;
-			int DamageArmour = 10;
 			int ArmourDurability = 11;
-			p1.DamagePlayerHealth(DamageTaken);
-			p1.DamagePlayerArmour(DamageArmour, ArmourDurability);
+			p1.DamagePlayerHealth(Enemy.getDamage());
+			p1.DamagePlayerArmour(Enemy.getDamage(), ArmourDurability);
 			PlayerInfo.remove(calculateB);
 			UpdatePlayerStats();
 
