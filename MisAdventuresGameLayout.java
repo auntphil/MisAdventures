@@ -11,6 +11,7 @@ public class MisAdventuresGameLayout extends JFrame {
 	int pamax = 50;
 	int pamstr = 11;
 	Player p1 = new Player(phealth, phmax, parmour, pamax, pamstr);
+	Location Loc = new Location();
 	
 	Enemy Enemy = new Enemy();
 	// General Game Layout
@@ -48,15 +49,12 @@ public class MisAdventuresGameLayout extends JFrame {
 		
 		//Player.setPlayerHealth(25);
 		String title = "The Misfortunate Adventures of Joe";
-		String region = "Forest of Goluth";
-		String location = "Temple of Thimvel";
-		String room = "Entrance Way";
 		Enemy.getEnemy();
 
 		init();
 		gameLayout();
 		UpdatePlayerStats();
-		UpdateLocation(region, location, room);
+		UpdateLocation();
 		UpdateEncounter();
 	}
 
@@ -191,18 +189,18 @@ public class MisAdventuresGameLayout extends JFrame {
 	}
 
 	// Location Panel Update
-	public void UpdateLocation(String Reg, String Loc, String Ro) {
+	public void UpdateLocation() {
 		// Remove Old Elements
 		location.remove(Region);
 		location.remove(Location);
 		location.remove(Room);
 
 		// Set Values
-		Region = new JLabel("Region: " + Reg);
+		Region = new JLabel("Region: " + Loc.getRegion());
 		Region.setAlignmentX(CENTER_ALIGNMENT);
-		Location = new JLabel("Location: " + Loc);
+		Location = new JLabel("Location: " + Loc.getLocation());
 		Location.setAlignmentX(CENTER_ALIGNMENT);
-		Room = new JLabel("Room: " + Ro);
+		Room = new JLabel("Room: " + Loc.getRoom());
 		Room.setAlignmentX(CENTER_ALIGNMENT);
 
 		// Add to Panel
