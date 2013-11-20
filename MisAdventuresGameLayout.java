@@ -41,7 +41,6 @@ public class MisAdventuresGameLayout extends JFrame {
 	
 	// Action Panel Setup
 	private JPanel ActionWindow = new JPanel();
-	private JLabel ActionTitle;
 	private JButton ActionButton;
 	private ActionButtonHandler abHandler;
 
@@ -151,8 +150,6 @@ public class MisAdventuresGameLayout extends JFrame {
 		PlayerInfo.add(Armour);
 		
 		// ActionWindow Initialization
-		ActionTitle = new JLabel("Action Window");
-		ActionWindow.add(ActionTitle);
 
 	}
 
