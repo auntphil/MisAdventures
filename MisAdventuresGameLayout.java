@@ -5,6 +5,13 @@ import java.awt.event.*;
 
 public class MisAdventuresGameLayout extends JFrame {
 
+	int phealth = 65;
+	int phmax = 100;
+	int parmour = 8;
+	int pamax = 50;
+	int pamstr = 11;
+	Player p1 = new Player(phealth, phmax, parmour, pamax, pamstr);
+	
 	Enemy Enemy = new Enemy();
 	// General Game Layout
 	private JFrame game = new JFrame("The Misfortunate Adventures of Joe");
@@ -15,7 +22,6 @@ public class MisAdventuresGameLayout extends JFrame {
 	private JPanel PlayerInfo = new JPanel();
 	private JLabel Health, Armour, PlayerStatTitle;
 	private JButton calculateB;
-	private int PlayerHealth, PlayerMaxHealth, PlayerArmour, PlayerMaxArmour;
 
 	// Location Panel Setup
 	private JPanel location = new JPanel();
@@ -46,12 +52,6 @@ public class MisAdventuresGameLayout extends JFrame {
 		String location = "Temple of Thimvel";
 		String room = "Entrance Way";
 		Enemy.getEnemy();
-
-
-		PlayerHealth = 65;
-		PlayerMaxHealth = (100);
-		PlayerArmour = (8);
-		PlayerMaxArmour = (50);
 
 		init();
 		gameLayout();
@@ -212,27 +212,24 @@ public class MisAdventuresGameLayout extends JFrame {
 	}
 
 	// PlayerStat Panel Update
-	public void UpdatePlayerStats(/*
-								 * int phealth, int phmax, int parmour, int
-								 * pamax
-								 */) {
+	public void UpdatePlayerStats() {
 
 		// Remove Old Elements
 		PlayerInfo.remove(Health);
 		PlayerInfo.remove(Armour);
 
 		// Set Values
-		if (PlayerHealth == 0)
+		if (p1.getPlayerHealth() == 0)
 			Health = new JLabel("Health: Dead :(");
 		else
-			Health = new JLabel("Health: " + PlayerHealth + "/"
-					+ PlayerMaxHealth);
+			Health = new JLabel("Health: " + p1.getPlayerHealth() + "/"
+					+ p1.getPlayerMaxHealth());
 		Health.setAlignmentX(CENTER_ALIGNMENT);
-		if (PlayerArmour == 0)
+		if (p1.getPlayerArmour() == 0)
 			Armour = new JLabel("Armour: None");
 		else
-			Armour = new JLabel("Armour: " + PlayerArmour + "/"
-					+ PlayerMaxArmour);
+			Armour = new JLabel("Armour: " + p1.getPlayerArmour() + "/"
+					+ p1.getPlayerMaxArmour());
 		Armour.setAlignmentX(CENTER_ALIGNMENT);
 
 		// Button for Testing
@@ -265,7 +262,9 @@ public class MisAdventuresGameLayout extends JFrame {
 			int DamageTaken = 10;
 			int ArmourStrength = 11;
 			int DamageArmour = 10;
-			int ArmourDurability = 11; 
+			int ArmourDurability = 11;
+			p1.DamagePlayerHealth(DamageTaken);
+			p1.DamagePlayerArmour(DamageArmour, ArmourDurability);
 			PlayerInfo.remove(calculateB);
 			UpdatePlayerStats();
 
