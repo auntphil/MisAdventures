@@ -80,6 +80,10 @@ public class Enemy {
 	}
 	
 	public void getEnemy(){
+		Type = "Ogre";
+		Name = "Brutish";
+		Height = 97;
+		Weight = 512;
 		Health = 50;
 		MaxHealth = 50;
 		Armour = 25;
