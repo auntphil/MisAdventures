@@ -50,7 +50,13 @@ public class Enemy {
 	public void setMaxArmour(int maxArmour) {
 		MaxArmour = maxArmour;
 	}
-	
+	public int getDamage() {
+		return Damage;
+	}
+	public void setDamage(int damage) {
+		Damage = damage;
+	}
+
 	//Health and Armour for Enemy
 	public String HealthBar(int health) {
 		int current=0;
