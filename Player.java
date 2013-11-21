@@ -1,7 +1,7 @@
 
 public class Player {
 	
-	private int PlayerHealth, PlayerMaxHealth, PlayerArmour, PlayerMaxArmour, PlayerArmourStrength;
+	private int PlayerHealth, PlayerMaxHealth, PlayerArmour, PlayerMaxArmour, PlayerArmourStrength, PlayerWeapon;
 		
 	public Player(int playerHealth, int playerMaxHealth, int playerArmour, int playerMaxArmour, int playerArmourStrength)
 	{
@@ -10,10 +10,13 @@ public class Player {
 		PlayerArmour = playerArmour;
 		PlayerMaxArmour = playerMaxArmour;
 		PlayerArmourStrength = playerArmourStrength;
+		PlayerWeapon = 1;
 	}
 	
 	
 	//Getters and Setters for PlayerStats
+	public int getPlayerWeapon() {return this.PlayerWeapon;}
+	public void setPlayerWeapon(int PlayerWeapon){this.PlayerWeapon = PlayerWeapon;}
 	public int getPlayerHealth() {return this.PlayerHealth;}
 	public void setPlayerHealth(int playerHealth) {this.PlayerHealth = playerHealth;}
 	public int getPlayerMaxHealth() {return this.PlayerMaxHealth;}
@@ -65,20 +68,4 @@ public class Player {
 		
 		return PlayerArmour;
 	}
-	
-	public String HealthBar(double max, double current){
-		double Upper = (Math.round((current/max)*10))*2;
-		double Lower = 20-Upper;
-		String tempFull = "#########################################################";
-		String tempEmpty = "______________________________________________________";
-		tempFull = tempFull.substring(0, (int) Upper);
-		tempEmpty = tempEmpty.substring(0, (int) Lower);
-		String bar = tempFull.concat(tempEmpty);
-				
-		return bar;
-	}
-	
-
-
-
 }

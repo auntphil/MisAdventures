@@ -10,10 +10,14 @@ public class MisAdventuresGameLayout extends JFrame {
 	int parmour = 8;
 	int pamax = 50;
 	int pamstr = 11;
+	
+	//constructors
 	Player p1 = new Player(phealth, phmax, parmour, pamax, pamstr);
 	Location Loc = new Location();
-	
+	Weapon Weapon = new Weapon();
 	Enemy Enemy = new Enemy();
+	
+	
 	// General Game Layout
 	private JFrame game = new JFrame("The Misfortunate Adventures of Joe");
 	private JPanel parent = new JPanel();
@@ -21,7 +25,7 @@ public class MisAdventuresGameLayout extends JFrame {
 
 	// PlayerStat Panel Setup
 	private JPanel PlayerInfo = new JPanel();
-	private JLabel Health, Armour, PlayerStatTitle;
+	private JLabel Health, Armour, PlayerStatTitle, WeaponName;
 
 	// Location Panel Setup
 	private JPanel location = new JPanel();
@@ -155,10 +159,12 @@ public class MisAdventuresGameLayout extends JFrame {
 		PlayerStatTitle = new JLabel("Player Stats");
 		Health = new JLabel(" ");
 		Armour = new JLabel(" ");
+		WeaponName = new JLabel(" ");
 
 		PlayerInfo.add(PlayerStatTitle);
 		PlayerInfo.add(Health);
 		PlayerInfo.add(Armour);
+		PlayerInfo.add(WeaponName);
 		
 		// ActionWindow Initialization
 
@@ -171,8 +177,9 @@ public class MisAdventuresGameLayout extends JFrame {
 	public void UpdateEncounter() {
 		
 		// get Health Bars
-		String HBar = Enemy.HealthBar(0);
-		String ABar = Enemy.HealthBar(1);
+		String ABar = Enemy.HealthBar();
+		String HBar = Enemy.ArmourBar();
+
 
 		// Remove Old Elements
 		EncounterParent.remove(EncounterTitle);
@@ -241,8 +248,11 @@ public class MisAdventuresGameLayout extends JFrame {
 		// Remove Old Elements
 		PlayerInfo.remove(Health);
 		PlayerInfo.remove(Armour);
+		PlayerInfo.remove(WeaponName);
 
 		// Set Values
+		Weapon.setID(1);
+		WeaponName = new JLabel(Weapon.getName());
 		if (p1.getPlayerHealth() == 0)
 			Health = new JLabel("Health: Dead :(");
 		else
@@ -259,6 +269,7 @@ public class MisAdventuresGameLayout extends JFrame {
 		// Add to Panel
 		PlayerInfo.add(Health);
 		PlayerInfo.add(Armour);
+		PlayerInfo.add(WeaponName);
 
 		PlayerInfo.revalidate();
 		PlayerInfo.repaint();
@@ -303,10 +314,13 @@ public class MisAdventuresGameLayout extends JFrame {
 	private class ActionButtonHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			int ArmourDurability = 11;
+			Enemy.AttackEnemyHealth(Weapon.getDamage());
+			Enemy.AttackEnemyArmour(Weapon.getDamage());
 			p1.DamagePlayerHealth(Enemy.getDamage());
 			p1.DamagePlayerArmour(Enemy.getDamage(), ArmourDurability);
 			PlayerInfo.remove(ActionButton);
 			UpdatePlayerStats();
+			UpdateEncounter();
 
 		}
 	}
