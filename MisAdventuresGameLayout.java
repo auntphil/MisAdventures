@@ -177,8 +177,9 @@ public class MisAdventuresGameLayout extends JFrame {
 	public void UpdateEncounter() {
 		
 		// get Health Bars
-		String ABar = Enemy.HealthBar();
-		String HBar = Enemy.ArmourBar();
+		String ABar = Enemy.ArmourBar();
+		String HBar = Enemy.HealthBar();
+
 
 
 		// Remove Old Elements
@@ -187,8 +188,8 @@ public class MisAdventuresGameLayout extends JFrame {
 		Encounter.remove(EncounterName);
 		Encounter.remove(EncounterHeight);
 		Encounter.remove(EncounterWeight);
-		EncounterHealth.remove(EncHealth);
-		EncounterHealth.remove(EncArmour);
+		//EncounterHealth.remove(EncHealth);
+		//EncounterHealth.remove(EncArmour);
 		EncounterHealth.remove(EncHBar);
 		EncounterHealth.remove(EncABar);
 
@@ -204,9 +205,9 @@ public class MisAdventuresGameLayout extends JFrame {
 		EncounterWeight = new JLabel("Weight: " + Enemy.getWeight() + " pounds");
 		EncounterWeight.setAlignmentX(CENTER_ALIGNMENT);
 		EncHealth = new JLabel("  Health: " + Enemy.getHealth() + "/" + Enemy.getMaxHealth());
-		EncHBar = new JLabel("    " + HBar + "|");
+		EncHBar = new JLabel("Health    " + HBar + "|");
 		EncArmour = new JLabel("  Armour: " + Enemy.getArmour() + "/" + Enemy.getMaxArmour());
-		EncABar = new JLabel("    " + ABar + "|");
+		EncABar = new JLabel("Armour  " + ABar + "|");
 
 		// Add to Panel
 		EncounterParent.add(EncounterTitle);
@@ -214,9 +215,9 @@ public class MisAdventuresGameLayout extends JFrame {
 		Encounter.add(EncounterName);
 		Encounter.add(EncounterHeight);
 		Encounter.add(EncounterWeight);
-		EncounterHealth.add(EncHealth);
+		//EncounterHealth.add(EncHealth);
 		EncounterHealth.add(EncHBar);
-		EncounterHealth.add(EncArmour);
+		//EncounterHealth.add(EncArmour);
 		EncounterHealth.add(EncABar);
 
 	}

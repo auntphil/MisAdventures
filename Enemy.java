@@ -92,38 +92,43 @@ public class Enemy {
 	}
 
 	public void AttackEnemyArmour(int damage) {
-		if (ArmourDurable < damage) {
-			if (Armour != 0)
-				Armour = Armour - (damage - ArmourDurable);
-		} else
-			Armour = Armour - 1;
-		if (Armour < 0)
-			Armour = 0;
+		if (Armour != 0) {
+			if (ArmourDurable < damage) {
+				if (Armour != 0)
+					Armour = Armour - (damage - ArmourDurable);
+			} else
+				Armour = Armour - 1;
+			if (Armour <= 0)
+				Armour = 0;
+		}
 	}
 
 	// Health for Enemy
-	public String HealthBar(){
-		double Upper = (Math.round((Health/MaxHealth)*10))*2;
-		double Lower = 20-Upper;
+	public String HealthBar() {
+		double H = Health;
+		double M = MaxHealth;
+		double Upper = (Math.round((H / M) * 10)) * 2;
+		double Lower = 20 - Upper;
 		String tempFull = "#########################################################";
 		String tempEmpty = "______________________________________________________";
 		tempFull = tempFull.substring(0, (int) Upper);
 		tempEmpty = tempEmpty.substring(0, (int) Lower);
 		String bar = tempFull.concat(tempEmpty);
-				
 		return bar;
 	}
-	
+
 	// Armour for Enemy
-	public String ArmourBar(){
-		double Upper = (Math.round((Armour/MaxArmour)*10))*2;
-		double Lower = 20-Upper;
+	public String ArmourBar() {
+		double A = Armour;
+		double M = MaxArmour;
+		double Upper = (Math.round((A / M) * 10)) * 2;
+		double Lower = 20 - Upper;
 		String tempFull = "#########################################################";
 		String tempEmpty = "______________________________________________________";
 		tempFull = tempFull.substring(0, (int) Upper);
 		tempEmpty = tempEmpty.substring(0, (int) Lower);
 		String bar = tempFull.concat(tempEmpty);
-				
+
 		return bar;
 	}
 
