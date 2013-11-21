@@ -39,10 +39,14 @@ public class MisAdventuresGameLayout extends JFrame {
 	private JLabel EncounterTitle, EncounterType, EncounterName,
 			EncounterHeight, EncounterWeight, EncHBar, EncABar;
 	
-	// Action Panel Setup
+	// ActionWindow Panel Setup
 	private JPanel ActionWindow = new JPanel();
 	private JButton ActionButton;
 	private ActionButtonHandler abHandler;
+	
+	// StoryWindow Panel Setup
+	private JPanel StoryWindow = new JPanel();
+	private JLabel StoryTitle, StoryText;
 
 
 	public MisAdventuresGameLayout() {
@@ -59,6 +63,7 @@ public class MisAdventuresGameLayout extends JFrame {
 		UpdatePlayerStats();
 		UpdateLocation();
 		UpdateEncounter();
+		UpdateStoryWindow();
 		UpdateActionWindow();
 	}
 
@@ -93,11 +98,16 @@ public class MisAdventuresGameLayout extends JFrame {
 				BoxLayout.Y_AXIS));
 		EncounterHealth.setBorder(BorderFactory.createLineBorder(Color.black));
 		EncounterHealth.setBounds(456, 17, 197, 65);
+		
+		// Story Panel Construction
+		StoryWindow.setLayout(new BoxLayout(StoryWindow, BoxLayout.Y_AXIS));
+		StoryWindow.setBorder(BorderFactory.createLineBorder(Color.black));
+		StoryWindow.setBounds(255, 91, 400, 150);
 
 		// ActionWindow Panel Construction
 		ActionWindow.setLayout(new BoxLayout(ActionWindow, BoxLayout.X_AXIS));
 		ActionWindow.setBorder(BorderFactory.createLineBorder(Color.black));
-		ActionWindow.setBounds(255, 89, 400, 65);
+		ActionWindow.setBounds(255, 246, 400, 65);
 		
 		// Adding Panels to the Game Frame
 		game.setContentPane(parent);
@@ -106,6 +116,7 @@ public class MisAdventuresGameLayout extends JFrame {
 		parent.add(Encounter);
 		parent.add(EncounterHealth);
 		parent.add(EncounterParent);
+		parent.add(StoryWindow);
 		parent.add(ActionWindow);
 		
 		// Encounter Stats Initialization
@@ -151,6 +162,9 @@ public class MisAdventuresGameLayout extends JFrame {
 		
 		// ActionWindow Initialization
 
+		// StoryWindow Initialization
+		StoryTitle = new JLabel("The Story");
+		StoryText = new JLabel("Here is where the story will go");
 	}
 
 	// Encounter Panel Update
@@ -248,6 +262,18 @@ public class MisAdventuresGameLayout extends JFrame {
 
 		PlayerInfo.revalidate();
 		PlayerInfo.repaint();
+	}
+	
+	public void UpdateStoryWindow(){
+		StoryWindow.remove(StoryTitle);
+		StoryWindow.remove(StoryText);
+		
+		StoryWindow.add(StoryTitle);
+		StoryWindow.add(StoryText);
+		
+		
+		StoryWindow.revalidate();
+		StoryWindow.repaint();
 	}
 	
 	public void UpdateActionWindow(){
