@@ -1,7 +1,11 @@
 
 public class Weapon {
 	private String Name;
-	private int Damage, ID;
+	private int Damage, ID, Speed=10;
+	
+	public int getSpeed(){
+		return Speed;
+	}
 	public int getID() {
 		return ID;
 	}
@@ -9,41 +13,31 @@ public class Weapon {
 		ID = iD;
 	}
 	public String getName() {
-		NameWeapon();
 		return Name;
 	}
 	public void setName(String name) {
 		Name = name;
 	}
 	public int getDamage() {
-		WeaponDamage();
 		return this.Damage;
 	}
 	public void setDamage(int damage) {
 		Damage = damage;
 	}
 	
-	public void NameWeapon(){
+	public void DifferentWeapons(){
 		switch(ID){
 		case 1:
 			Name = "Flame Sword";
+			Damage = 5;
+			Speed = 6;
 			break;
 		default:
 			Name = "Fist";
+			Damage = 1;
+			Speed = 10;
 			break;
 				
 		}
 	}
-	
-	public void WeaponDamage(){
-		switch(ID){
-		case 1:
-			Damage = 5;
-			break;
-		default:
-			Damage = 1;
-			break;
-		}
-	}
-
 }
