@@ -377,7 +377,6 @@ public class MisAdventuresGameLayout extends JFrame {
 			p1.DamagePlayerHealth(Enemy.getDamage());
 			p1.DamagePlayerArmour(Enemy.getDamage(), ArmourDurability);
 			PlayerInfo.remove(ActionButton);
-			System.out.println("Damage: " + Weapon.getDamage());
 			UpdatePlayerStats();
 			UpdateEncounter();
 
