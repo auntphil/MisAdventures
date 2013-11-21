@@ -2,8 +2,11 @@ public class Enemy {
 
 	private String Type, Name, Weapon;
 	private int Height, Weight, Health, MaxHealth, Armour, MaxArmour, Damage,
-			ArmourStrength, ArmourDurable;
+			ArmourStrength, ArmourDurable, Speed;
 
+	public int getSpeed(){
+		return Speed;
+	}
 	public String getWeapon(){
 		return Weapon;
 	}	
@@ -147,6 +150,7 @@ public class Enemy {
 		Damage = 10;
 		ArmourStrength = 2;
 		ArmourDurable = 1;
+		Speed = 3;
 		Weapon = "Club";
 	}
 }
