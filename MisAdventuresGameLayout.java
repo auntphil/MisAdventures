@@ -38,7 +38,7 @@ public class MisAdventuresGameLayout extends JFrame {
 
 	// EncounterHealth Panel Setup
 	private JPanel EncounterHealth = new JPanel();
-	private JLabel EncHealth, EncArmour;
+	private JLabel EncHealth, EncArmour, EncWeapon;
 
 	// Encounter Info Panel Setup
 	private JPanel Encounter = new JPanel();
@@ -150,6 +150,7 @@ public class MisAdventuresGameLayout extends JFrame {
 		EncArmour = new JLabel("");
 		EncHBar = new JLabel("");
 		EncABar = new JLabel("");
+		EncWeapon = new JLabel("");
 
 		EncounterParent.add(EncounterTitle);
 		Encounter.add(EncounterType);
@@ -160,6 +161,7 @@ public class MisAdventuresGameLayout extends JFrame {
 		EncounterHealth.add(EncHBar);
 		EncounterHealth.add(EncArmour);
 		EncounterHealth.add(EncABar);
+		EncounterHealth.add(EncWeapon);
 
 		// Location Initialization
 		Region = new JLabel(" ");
@@ -213,6 +215,7 @@ public class MisAdventuresGameLayout extends JFrame {
 		//EncounterHealth.remove(EncArmour);
 		EncounterHealth.remove(EncHBar);
 		EncounterHealth.remove(EncABar);
+		EncounterHealth.remove(EncWeapon);
 
 		// Set Values
 		EncounterTitle = new JLabel("Enemy Information");
@@ -229,6 +232,7 @@ public class MisAdventuresGameLayout extends JFrame {
 		EncHBar = new JLabel("Health    " + HBar + "|");
 		EncArmour = new JLabel("  Armour: " + Enemy.getArmour() + "/" + Enemy.getMaxArmour());
 		EncABar = new JLabel("Armour  " + ABar + "|");
+		EncWeapon = new JLabel("Weapon: " + Enemy.getWeapon());
 
 		// Add to Panel
 		EncounterParent.add(EncounterTitle);
@@ -240,6 +244,7 @@ public class MisAdventuresGameLayout extends JFrame {
 		EncounterHealth.add(EncHBar);
 		//EncounterHealth.add(EncArmour);
 		EncounterHealth.add(EncABar);
+		EncounterHealth.add(EncWeapon);
 
 	}
 
@@ -274,7 +279,7 @@ public class MisAdventuresGameLayout extends JFrame {
 
 		// Set Values
 		Weapon.setID(p1.getPlayerWeapon());
-		WeaponName = new JLabel(Weapon.getName());
+		WeaponName = new JLabel(Weapon.getName() + " (+" + Weapon.getDamage() + " Damage)");
 		if (p1.getPlayerHealth() == 0)
 			Health = new JLabel("Health: Dead :(");
 		else
@@ -391,6 +396,7 @@ public class MisAdventuresGameLayout extends JFrame {
 			WeaponSwap.remove(ChFist);
 			WeaponSwap.remove(ChFSword);
 			UpdateWeaponSwap();
+			UpdatePlayerStats();
 		}
 	}
 }
