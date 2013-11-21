@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class MisAdventuresGameLayout extends JFrame {
+	
+	private int WeaponSelected;
 
 	int phealth = 65;
 	int phmax = 100;
@@ -51,6 +53,12 @@ public class MisAdventuresGameLayout extends JFrame {
 	// StoryWindow Panel Setup
 	private JPanel StoryWindow = new JPanel();
 	private JLabel StoryTitle, StoryText;
+	
+	// Change Weapons Panel Setup
+	private JPanel WeaponSwap = new JPanel();
+	private JLabel Weapons;
+	private JButton ChFist, ChFSword;
+	private WeaponSelectHandler WeaponSelect;
 
 
 	public MisAdventuresGameLayout() {
@@ -69,6 +77,7 @@ public class MisAdventuresGameLayout extends JFrame {
 		UpdateEncounter();
 		UpdateStoryWindow();
 		UpdateActionWindow();
+		UpdateWeaponSwap();
 	}
 
 	public void gameLayout() {
@@ -113,6 +122,11 @@ public class MisAdventuresGameLayout extends JFrame {
 		ActionWindow.setBorder(BorderFactory.createLineBorder(Color.black));
 		ActionWindow.setBounds(255, 246, 400, 65);
 		
+		// Weapon Swap Page
+		WeaponSwap.setLayout(null);
+		WeaponSwap.setBorder(BorderFactory.createLineBorder(Color.black));
+		WeaponSwap.setBounds(0, 246, 250, 225);
+		
 		// Adding Panels to the Game Frame
 		game.setContentPane(parent);
 		parent.add(location);
@@ -122,6 +136,7 @@ public class MisAdventuresGameLayout extends JFrame {
 		parent.add(EncounterParent);
 		parent.add(StoryWindow);
 		parent.add(ActionWindow);
+		parent.add(WeaponSwap);
 		
 		// Encounter Stats Initialization
 		EncounterTitle = new JLabel("");
@@ -171,6 +186,12 @@ public class MisAdventuresGameLayout extends JFrame {
 		// StoryWindow Initialization
 		StoryTitle = new JLabel("The Story");
 		StoryText = new JLabel("Here is where the story will go");
+		
+		// WeaponSwap Initialization
+		Weapons = new JLabel("All Your Weapons!");
+		Weapons.setBounds(67, 0, 115, 25);
+		
+		WeaponSwap.add(Weapons);
 	}
 
 	// Encounter Panel Update
@@ -252,7 +273,7 @@ public class MisAdventuresGameLayout extends JFrame {
 		PlayerInfo.remove(WeaponName);
 
 		// Set Values
-		Weapon.setID(1);
+		Weapon.setID(p1.getPlayerWeapon());
 		WeaponName = new JLabel(Weapon.getName());
 		if (p1.getPlayerHealth() == 0)
 			Health = new JLabel("Health: Dead :(");
@@ -302,6 +323,42 @@ public class MisAdventuresGameLayout extends JFrame {
 		ActionWindow.repaint();
 	}
 
+	public void UpdateWeaponSwap(){
+		//WeaponSwap.remove(ChFist);
+		//WeaponSwap.remove(ChFSword);
+		
+		if(p1.getPlayerWeapon()==0)
+			ChFist = new JButton("Selected");
+		else{
+			ChFist = new JButton("Fists");
+			WeaponSelect = new WeaponSelectHandler();
+			ChFist.addActionListener(WeaponSelect);
+			WeaponSelected = 0;
+			
+		}
+		ChFist.setBounds(0, 0, 25, 100);
+		
+		if(p1.getPlayerWeapon()==1)
+			ChFSword = new JButton("Selected");
+		else{
+			ChFSword = new JButton("Fire Sword");
+			WeaponSelect = new WeaponSelectHandler();
+			ChFSword.addActionListener(WeaponSelect);
+			WeaponSelected = 1;
+			
+		}
+		
+		
+		ChFist.setBounds(5, 30, 100, 25);
+		ChFSword.setBounds(110, 30, 100, 25);
+		
+		WeaponSwap.add(ChFist);
+		WeaponSwap.add(ChFSword);
+		
+		WeaponSwap.revalidate();
+		WeaponSwap.repaint();
+		
+	}
 	// Make Window Visible and initialize it
 	public void init() {
 		game.setVisible(true);
@@ -320,9 +377,21 @@ public class MisAdventuresGameLayout extends JFrame {
 			p1.DamagePlayerHealth(Enemy.getDamage());
 			p1.DamagePlayerArmour(Enemy.getDamage(), ArmourDurability);
 			PlayerInfo.remove(ActionButton);
+			System.out.println("Damage: " + Weapon.getDamage());
 			UpdatePlayerStats();
 			UpdateEncounter();
 
+		}
+	}
+	
+	// Weapon Swap Class
+	private class WeaponSelectHandler implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			p1.setPlayerWeapon(WeaponSelected);
+			Weapon.setID(p1.getPlayerWeapon());
+			WeaponSwap.remove(ChFist);
+			WeaponSwap.remove(ChFSword);
+			UpdateWeaponSwap();
 		}
 	}
 }

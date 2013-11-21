@@ -10,7 +10,7 @@ public class Player {
 		PlayerArmour = playerArmour;
 		PlayerMaxArmour = playerMaxArmour;
 		PlayerArmourStrength = playerArmourStrength;
-		PlayerWeapon = 1;
+		PlayerWeapon = 0;
 	}
 	
 	
