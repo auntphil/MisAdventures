@@ -11,6 +11,7 @@ public class MisAdventuresGameLayout extends JFrame {
 	int pamax = 50;
 	int pamstr = 11;
 	Player p1 = new Player(phealth, phmax, parmour, pamax, pamstr);
+	Location l1 = new Location();
 	
 	Enemy Enemy = new Enemy();
 	// General Game Layout
@@ -265,6 +266,8 @@ public class MisAdventuresGameLayout extends JFrame {
 			int ArmourDurability = 11;
 			p1.DamagePlayerHealth(DamageTaken);
 			p1.DamagePlayerArmour(DamageArmour, ArmourDurability);
+			p1.DisplayCurrentPosition();
+			//l1.levelTraversal(p1);
 			PlayerInfo.remove(calculateB);
 			UpdatePlayerStats();
 
