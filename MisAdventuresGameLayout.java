@@ -5,14 +5,41 @@ import java.awt.event.*;
 
 public class MisAdventuresGameLayout extends JFrame {
 	
-	private int WeaponSelected, PlayerDamage;
+	private int WeaponSelected, PlayerDamage, EnemyDamage;
+	private boolean inCombat = false;
+	
+	public boolean isInCombat() {
+		return inCombat;
+	}
+
+	public void setInCombat(boolean inCombat) {
+		this.inCombat = inCombat;
+	}
+
+	public int getPlayerDamage() {
+		return PlayerDamage;
+	}
+
+	public void setPlayerDamage(int playerDamage) {
+		PlayerDamage = playerDamage;
+	}
+
+	public int getEnemyDamage() {
+		return EnemyDamage;
+	}
+
+	public void setEnemyDamage(int enemyDamage) {
+		EnemyDamage = enemyDamage;
+	}
+
+
 
 	int phealth = 100;
 	int phmax = 100;
 	int parmour = 50;
 	int pamax = 50;
 	int pamstr = 11;
-	
+
 	//constructors
 	Player p1 = new Player(phealth, phmax, parmour, pamax, pamstr);
 	Location Loc = new Location();
@@ -53,7 +80,8 @@ public class MisAdventuresGameLayout extends JFrame {
 	
 	// StoryWindow Panel Setup
 	private JPanel StoryWindow = new JPanel();
-	private JLabel StoryTitle, StoryText;
+	private JLabel StoryTitle;
+	private JTextArea StoryText;
 	
 	// Change Weapons Panel Setup
 	private JPanel WeaponSwap = new JPanel();
@@ -188,7 +216,8 @@ public class MisAdventuresGameLayout extends JFrame {
 
 		// StoryWindow Initialization
 		StoryTitle = new JLabel("The Story");
-		StoryText = new JLabel("Here is where the story will go");
+		StoryText = new JTextArea("Here is where the story will go");
+
 		
 		// WeaponSwap Initialization
 		Weapons = new JLabel("All Your Weapons!");
@@ -308,11 +337,15 @@ public class MisAdventuresGameLayout extends JFrame {
 		StoryWindow.remove(StoryTitle);
 		StoryWindow.remove(StoryText);
 		
-		StoryText = new JLabel(Story.PlayerAttack(Attack.getGlance(), PlayerDamage));
+		if(isInCombat())
+			StoryText = new JTextArea(Story.PlayerAttack(Attack.getGlance(), getPlayerDamage(), Enemy.getType()));
+		else
+			StoryText = new JTextArea("You enter the " + Loc.getRoom() + " and see a menacing " + Enemy.getType() + "! What do you want to do?");
 		StoryWindow.add(StoryTitle);
 		StoryWindow.add(StoryText);
 		
-		
+		StoryText.setLineWrap(true);
+		StoryText.setWrapStyleWord(true);
 		StoryWindow.revalidate();
 		StoryWindow.repaint();
 	}
@@ -380,14 +413,17 @@ public class MisAdventuresGameLayout extends JFrame {
 	private class ActionButtonHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			int ArmourDurability = 11;
-			PlayerDamage = Attack.PlayerAttack(Weapon.getSpeed(), Weapon.getDamage(), Enemy.getSpeed());
-			Enemy.AttackEnemyHealth(PlayerDamage);
-			Enemy.AttackEnemyArmour(PlayerDamage);
-			p1.DamagePlayerHealth(Enemy.getDamage());
-			p1.DamagePlayerArmour(Enemy.getDamage(), ArmourDurability);
+			setInCombat(true);
+			setPlayerDamage(Attack.PlayerAttack(Weapon.getSpeed(), Weapon.getDamage(), Enemy.getSpeed()));
+			Enemy.AttackEnemyHealth(getPlayerDamage());
+			Enemy.AttackEnemyArmour(getPlayerDamage());
+			setEnemyDamage(Attack.EnemyAttack(Enemy.getDamage(), Enemy.getSpeed()));
+			p1.DamagePlayerHealth(getEnemyDamage());
+			p1.DamagePlayerArmour(getEnemyDamage(), ArmourDurability, Attack.isEvade());
 			PlayerInfo.remove(ActionButton);
 			UpdatePlayerStats();
 			UpdateEncounter();
+			UpdateStoryWindow();
 
 		}
 	}

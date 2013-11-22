@@ -31,7 +31,7 @@ public class Player {
 	
 	public void Damage()//(/*int health, int max, int armour, int armourMax*/)
 	{
-		System.out.println(getPlayerHealth());
+		//System.out.println(getPlayerHealth());
 		PlayerHealth = PlayerHealth - 10;
 	}
 	
@@ -57,7 +57,9 @@ public class Player {
 		return PlayerHealth;
 	}
 	
-	public int DamagePlayerArmour(int damage, int durable) {
+	public int DamagePlayerArmour(int damage, int durable, boolean evade) {
+		if (evade)
+			return 0;
 		if (durable < damage) {
 			if (PlayerArmour != 0)
 				PlayerArmour = PlayerArmour - (damage - durable);
