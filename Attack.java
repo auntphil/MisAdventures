@@ -2,10 +2,10 @@
 public class Attack {
 	//0 = Not Glance
 	//1 = Glance
-	private int glance = 0;
+	private boolean glance = false;
 	private int chance;
 
-	public int getGlance() {
+	public boolean getGlance() {
 		return glance;
 	}
 	
@@ -49,13 +49,16 @@ public class Attack {
 		}
 		int hit = (int) (Math.random() * ((9)+1));
 		if(hit>=chance){
-			glance = (int) (Math.random());
-			if(glance==0)
-				return 0;
-			else
-				return Math.round(Wdam/2);
+			int glanceDam = (int) (Math.random());
+			if(glanceDam==0){
+				glance = false;
+				return 0;}
+			else{
+				glance = true;
+				return Math.round(Wdam/2);}
 		}
 		else
+			glance = false;
 			return Wdam;
 	}
 

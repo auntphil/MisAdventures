@@ -5,7 +5,7 @@ import java.awt.event.*;
 
 public class MisAdventuresGameLayout extends JFrame {
 	
-	private int WeaponSelected;
+	private int WeaponSelected, PlayerDamage;
 
 	int phealth = 100;
 	int phmax = 100;
@@ -19,6 +19,7 @@ public class MisAdventuresGameLayout extends JFrame {
 	Weapon Weapon = new Weapon();
 	Enemy Enemy = new Enemy();
 	Attack Attack = new Attack();
+	Story Story = new Story();
 	
 	// General Game Layout
 	private JFrame game = new JFrame("The Misfortunate Adventures of Joe");
@@ -307,6 +308,7 @@ public class MisAdventuresGameLayout extends JFrame {
 		StoryWindow.remove(StoryTitle);
 		StoryWindow.remove(StoryText);
 		
+		StoryText = new JLabel(Story.PlayerAttack(Attack.getGlance(), PlayerDamage));
 		StoryWindow.add(StoryTitle);
 		StoryWindow.add(StoryText);
 		
@@ -378,9 +380,9 @@ public class MisAdventuresGameLayout extends JFrame {
 	private class ActionButtonHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			int ArmourDurability = 11;
-			int Damage = Attack.PlayerAttack(Weapon.getSpeed(), Weapon.getDamage(), Enemy.getSpeed());
-			Enemy.AttackEnemyHealth(Damage);
-			Enemy.AttackEnemyArmour(Damage);
+			PlayerDamage = Attack.PlayerAttack(Weapon.getSpeed(), Weapon.getDamage(), Enemy.getSpeed());
+			Enemy.AttackEnemyHealth(PlayerDamage);
+			Enemy.AttackEnemyArmour(PlayerDamage);
 			p1.DamagePlayerHealth(Enemy.getDamage());
 			p1.DamagePlayerArmour(Enemy.getDamage(), ArmourDurability);
 			PlayerInfo.remove(ActionButton);
