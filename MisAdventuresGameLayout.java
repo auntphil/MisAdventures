@@ -106,7 +106,6 @@ public class MisAdventuresGameLayout extends JFrame {
 		
 		//Player.setPlayerHealth(25);
 		String title = "The Misfortunate Adventures of Joe";
-		Enemy.getEnemy();
 
 		init();
 		gameLayout();
@@ -234,7 +233,7 @@ public class MisAdventuresGameLayout extends JFrame {
 		
 		WeaponSwap.add(Weapons);
 	}
-
+	
 	// Encounter Panel Update
 	public void UpdateEncounter() {
 		
@@ -293,6 +292,8 @@ public class MisAdventuresGameLayout extends JFrame {
 		location.remove(Region);
 		location.remove(Location);
 		location.remove(Room);
+		Enemy.setID(Loc.getEnemyID());
+		Enemy.getEnemy();
 
 		// Set Values
 		Region = new JLabel("Region: " + Loc.getRegion());

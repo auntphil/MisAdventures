@@ -7,6 +7,12 @@ public class Location {
 	private boolean Empty = false;
 	private int EnemyID = 1;
 	
+	public int getEnemyID() {
+		return EnemyID;
+	}
+	public void setEnemyID(int enemyID) {
+		EnemyID = enemyID;
+	}
 	public boolean isEmpty() {
 		return Empty;
 	}
