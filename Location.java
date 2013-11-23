@@ -4,7 +4,15 @@ public class Location {
 	private String region = "Forest of Goluth";
 	private String location = "Temple of Thimvel";
 	private String room = "Entrance Way";
+	private boolean Empty = false;
+	private int EnemyID = 1;
 	
+	public boolean isEmpty() {
+		return Empty;
+	}
+	public void setEmpty(boolean empty) {
+		Empty = empty;
+	}
 	public String getRegion() {
 		return region;
 	}
