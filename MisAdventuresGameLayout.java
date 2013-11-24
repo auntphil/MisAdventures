@@ -196,9 +196,10 @@ public class MisAdventuresGameLayout extends JFrame {
 		StoryWindow.setBounds(255, 91, 400, 150);
 
 		// ActionWindow Panel Construction
-		ActionWindow.setLayout(new BoxLayout(ActionWindow, BoxLayout.X_AXIS));
+		//ActionWindow.setLayout(new BoxLayout(ActionWindow, BoxLayout.X_AXIS));
+		ActionWindow.setLayout(null);
 		ActionWindow.setBorder(BorderFactory.createLineBorder(Color.black));
-		ActionWindow.setBounds(255, 246, 400, 65);
+		ActionWindow.setBounds(255, 246, 400, 225);
 		
 		// Weapon Swap Page
 		WeaponSwap.setLayout(null);
@@ -435,6 +436,8 @@ public class MisAdventuresGameLayout extends JFrame {
 			AttackButton.addActionListener(abHandler);
 			AttackButton.setAlignmentX(CENTER_ALIGNMENT);
 			ActionWindow.add(AttackButton);
+			AttackButton.setBounds(15, 15, 200, 30);
+			
 		}
 		else
 		{
@@ -444,6 +447,7 @@ public class MisAdventuresGameLayout extends JFrame {
 				AttackButton.addActionListener(abHandler);
 				AttackButton.setAlignmentX(CENTER_ALIGNMENT);
 				ActionWindow.add(AttackButton);}
+				AttackButton.setBounds(15, 15, 200, 30);
 			switch(Loc.getDoors()){
 			case 0000:
 				break;
@@ -652,9 +656,17 @@ public class MisAdventuresGameLayout extends JFrame {
 			}
 			
 			
+			
 				
 		}
-		
+		if(isNorth())
+			NorthButton.setBounds(195, 60, 150, 30);
+		if(isSouth())
+			SouthButton.setBounds(195, 150, 150, 30);
+		if(isWest())
+			WestButton.setBounds(170, 105, 100, 30);
+		if(isEast())
+			EastButton.setBounds(270, 105, 100, 30);
 		
 		
 		ActionWindow.revalidate();
