@@ -3,10 +3,24 @@ public class Location {
 
 	private String region = "Forest of Goluth";
 	private String location = "Temple of Thimvel";
-	private String room = "Entrance Way";
-	private boolean Empty = false;
-	private int EnemyID = 1;
+	private String room;
+	private boolean Empty;
+	private int EnemyID;
+	private int RoomID;
+	private int Doors /*= NSEW*/;
 	
+	public int getRoomID() {
+		return RoomID;
+	}
+	public void setRoomID(int roomID) {
+		RoomID = roomID;
+	}
+	public int getDoors() {
+		return Doors;
+	}
+	public void setDoors(int doors) {
+		Doors = doors;
+	}
 	public int getEnemyID() {
 		return EnemyID;
 	}
@@ -36,5 +50,16 @@ public class Location {
 	}
 	public void setRoom(String room) {
 		this.room = room;
+	}
+	
+	public void getRoomInfo(){
+		switch(RoomID){
+		case 1:
+			room = "Entrance Way";
+			Empty = false;
+			EnemyID = 1;
+			Doors = 1001;
+			break;
+		}
 	}
 }
