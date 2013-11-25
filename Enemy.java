@@ -2,8 +2,14 @@ public class Enemy {
 
 	private String Type, Name, Weapon;
 	private int Height, Weight, Health, MaxHealth, Armour, MaxArmour, Damage,
-			ArmourStrength, ArmourDurable, Speed;
+			ArmourStrength, ArmourDurable, Speed, ID;
 
+	public int getID() {
+		return ID;
+	}
+	public void setID(int iD) {
+		ID = iD;
+	}
 	public int getSpeed(){
 		return Speed;
 	}
@@ -139,18 +145,22 @@ public class Enemy {
 	}
 
 	public void getEnemy() {
-		Type = "Ogre";
-		Name = "Brutish";
-		Height = 97;
-		Weight = 512;
-		Health = 50;
-		MaxHealth = 50;
-		Armour = 25;
-		MaxArmour = 25;
-		Damage = 10;
-		ArmourStrength = 2;
-		ArmourDurable = 1;
-		Speed = 3;
-		Weapon = "Club";
+		switch (ID){
+		case 1:
+			Type = "Ogre";
+			Name = "Brutish";
+			Height = 97;
+			Weight = 512;
+			Health = 5;
+			MaxHealth = 5;
+			Armour = 25;
+			MaxArmour = 25;
+			Damage = 5;
+			ArmourStrength = 2;
+			ArmourDurable = 1;
+			Speed = 3;
+			Weapon = "Club";
+			break;
+		}
 	}
 }

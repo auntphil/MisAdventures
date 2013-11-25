@@ -2,10 +2,31 @@
 public class Attack {
 	//0 = Not Glance
 	//1 = Glance
-	private int glance = 0;
+	private boolean glance = false;
 	private int chance;
+	private boolean evade = false;
 
-	public int getGlance() {
+	public int getChance() {
+		return chance;
+	}
+
+	public void setChance(int chance) {
+		this.chance = chance;
+	}
+
+	public boolean isEvade() {
+		return evade;
+	}
+
+	public void setEvade(boolean evade) {
+		this.evade = evade;
+	}
+
+	public void setGlance(boolean glance) {
+		this.glance = glance;
+	}
+
+	public boolean getGlance() {
 		return glance;
 	}
 	
@@ -47,16 +68,35 @@ public class Attack {
 				break;
 			}
 		}
+		
 		int hit = (int) (Math.random() * ((9)+1));
 		if(hit>=chance){
-			glance = (int) (Math.random());
-			if(glance==0)
-				return 0;
-			else
-				return Math.round(Wdam/2);
+			int glanceDam = (int) (Math.random() * ((1)+1));
+			//System.out.println("Glance: " + glanceDam);
+			if(glanceDam==0){
+				glance = false;
+				return 0;}
+			else{
+				glance = true;
+				return Math.round(Wdam/2);}
 		}
 		else
+			glance = false;
 			return Wdam;
+	}
+	
+	public int EnemyAttack(int Damage, int Speed){
+		chance = (int) (Math.random()*((9)+1));
+		//System.out.println("Random Chance: " + chance);
+		if(chance>=Speed){
+			evade = true;
+			return 0;
+		}
+		else {
+			evade = false;
+			return Damage;
+		}
+		
 	}
 
 }
