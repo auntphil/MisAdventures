@@ -5,7 +5,79 @@ import java.awt.event.*;
 
 public class MisAdventuresGameLayout extends JFrame {
 	
-	private int WeaponSelected;
+	private int WeaponSelected, PlayerDamage, EnemyDamage;
+	private boolean inCombat = false;
+	private boolean Alive = true;
+	private boolean North = false;
+	private boolean South = false;
+	private boolean East = false;
+	private boolean West = false;
+
+	public boolean isNorth() {
+		return North;
+	}
+
+	public void setNorth(boolean north) {
+		North = north;
+	}
+
+	public boolean isSouth() {
+		return South;
+	}
+
+	public void setSouth(boolean south) {
+		South = south;
+	}
+
+	public boolean isEast() {
+		return East;
+	}
+
+	public void setEast(boolean east) {
+		East = east;
+	}
+
+	public boolean isWest() {
+		return West;
+	}
+
+	public void setWest(boolean west) {
+		West = west;
+	}
+
+	public boolean isAlive() {
+		return Alive;
+	}
+
+	public void setAlive(boolean alive) {
+		Alive = alive;
+	}
+
+	public boolean isInCombat() {
+		return inCombat;
+	}
+
+	public void setInCombat(boolean inCombat) {
+		this.inCombat = inCombat;
+	}
+
+	public int getPlayerDamage() {
+		return PlayerDamage;
+	}
+
+	public void setPlayerDamage(int playerDamage) {
+		PlayerDamage = playerDamage;
+	}
+
+	public int getEnemyDamage() {
+		return EnemyDamage;
+	}
+
+	public void setEnemyDamage(int enemyDamage) {
+		EnemyDamage = enemyDamage;
+	}
+
+
 
 	int phealth = 100;
 	int phmax = 100;
@@ -13,17 +85,22 @@ public class MisAdventuresGameLayout extends JFrame {
 	int pamax = 50;
 	int pamstr = 11;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	Player p1 = new Player(phealth, phmax, parmour, pamax, pamstr);
 	Location l1 = new Location();
 =======
 >>>>>>> 5d9bf0fbec608c25d0bfc8e4506d43ac7f5f568b
 	
+=======
+
+>>>>>>> e1498fc4c9d248a9503e32cf4f064d0e335f628b
 	//constructors
 	Player p1 = new Player(phealth, phmax, parmour, pamax, pamstr);
 	Location Loc = new Location();
 	Weapon Weapon = new Weapon();
 	Enemy Enemy = new Enemy();
 	Attack Attack = new Attack();
+	Story Story = new Story();
 	
 	// General Game Layout
 	private JFrame game = new JFrame("The Misfortunate Adventures of Joe");
@@ -52,12 +129,18 @@ public class MisAdventuresGameLayout extends JFrame {
 	
 	// ActionWindow Panel Setup
 	private JPanel ActionWindow = new JPanel();
-	private JButton ActionButton;
-	private ActionButtonHandler abHandler;
+	private JButton AttackButton, NorthButton, EastButton, SouthButton, WestButton;
+	private AttackButtonHandler abHandler;
+	private NorthButtonHandler nbHandler;
+	private EastButtonHandler ebHandler;
+	private SouthButtonHandler sbHandler;
+	private WestButtonHandler wbHandler;
+	
 	
 	// StoryWindow Panel Setup
 	private JPanel StoryWindow = new JPanel();
-	private JLabel StoryTitle, StoryText;
+	private JLabel StoryTitle;
+	private JTextArea StoryText;
 	
 	// Change Weapons Panel Setup
 	private JPanel WeaponSwap = new JPanel();
@@ -73,15 +156,14 @@ public class MisAdventuresGameLayout extends JFrame {
 		
 		//Player.setPlayerHealth(25);
 		String title = "The Misfortunate Adventures of Joe";
-		Enemy.getEnemy();
 
 		init();
 		gameLayout();
 		UpdatePlayerStats();
 		UpdateLocation();
 		UpdateEncounter();
-		UpdateStoryWindow();
 		UpdateActionWindow();
+		UpdateStoryWindow();
 		UpdateWeaponSwap();
 	}
 
@@ -123,9 +205,10 @@ public class MisAdventuresGameLayout extends JFrame {
 		StoryWindow.setBounds(255, 91, 400, 150);
 
 		// ActionWindow Panel Construction
-		ActionWindow.setLayout(new BoxLayout(ActionWindow, BoxLayout.X_AXIS));
+		//ActionWindow.setLayout(new BoxLayout(ActionWindow, BoxLayout.X_AXIS));
+		ActionWindow.setLayout(null);
 		ActionWindow.setBorder(BorderFactory.createLineBorder(Color.black));
-		ActionWindow.setBounds(255, 246, 400, 65);
+		ActionWindow.setBounds(255, 246, 400, 225);
 		
 		// Weapon Swap Page
 		WeaponSwap.setLayout(null);
@@ -192,7 +275,8 @@ public class MisAdventuresGameLayout extends JFrame {
 
 		// StoryWindow Initialization
 		StoryTitle = new JLabel("The Story");
-		StoryText = new JLabel("Here is where the story will go");
+		StoryText = new JTextArea("Here is where the story will go");
+
 		
 		// WeaponSwap Initialization
 		Weapons = new JLabel("All Your Weapons!");
@@ -200,7 +284,7 @@ public class MisAdventuresGameLayout extends JFrame {
 		
 		WeaponSwap.add(Weapons);
 	}
-
+	
 	// Encounter Panel Update
 	public void UpdateEncounter() {
 		
@@ -255,10 +339,15 @@ public class MisAdventuresGameLayout extends JFrame {
 
 	// Location Panel Update
 	public void UpdateLocation() {
+		Loc.setRoomID(1);
+		Loc.getRoomInfo();
+		
 		// Remove Old Elements
 		location.remove(Region);
 		location.remove(Location);
 		location.remove(Room);
+		Enemy.setID(Loc.getEnemyID());
+		Enemy.getEnemy();
 
 		// Set Values
 		Region = new JLabel("Region: " + Loc.getRegion());
@@ -311,11 +400,38 @@ public class MisAdventuresGameLayout extends JFrame {
 	public void UpdateStoryWindow(){
 		StoryWindow.remove(StoryTitle);
 		StoryWindow.remove(StoryText);
+		if(!Loc.isEmpty()){
+			if(isInCombat())
+				StoryText = new JTextArea(Story.PlayerAttack(Attack.getGlance(), getPlayerDamage(), Enemy.getType()));
+			else{
+				StoryText = new JTextArea("You enter the " + Loc.getRoom() + " and see a menacing " + Enemy.getType() + "!");
+				if(isNorth())
+					StoryText.append(" There is a door straight agead");
+				if(isEast())
+					StoryText.append(" and to your right");
+				if(isWest())
+					StoryText.append(" and left");
+				if(isSouth())
+					StoryText.append(" Also there is the door you just came from!");
+				
+				StoryText.append(" What do you want to do?");
+				
+			}
+			
+			if(!isAlive())
+				StoryText = new JTextArea(Story.Death(Enemy.getType()));
+		}
+		else
+		{
+			StoryText = new JTextArea(Story.SecEntry(Enemy.getType()));
+		}
 		
+			
 		StoryWindow.add(StoryTitle);
 		StoryWindow.add(StoryText);
 		
-		
+		StoryText.setLineWrap(true);
+		StoryText.setWrapStyleWord(true);
 		StoryWindow.revalidate();
 		StoryWindow.repaint();
 	}
@@ -323,15 +439,262 @@ public class MisAdventuresGameLayout extends JFrame {
 	public void UpdateActionWindow(){
 		
 		// Action Button
-		ActionButton = new JButton("Attack " + Enemy.getName() + " " + Enemy.getType());
-		abHandler = new ActionButtonHandler();
-		ActionButton.addActionListener(abHandler);
-		ActionButton.setAlignmentX(CENTER_ALIGNMENT);
+		if(isInCombat()){
+			AttackButton = new JButton("Attack " + Enemy.getName() + " " + Enemy.getType());
+			abHandler = new AttackButtonHandler();
+			AttackButton.addActionListener(abHandler);
+			AttackButton.setAlignmentX(CENTER_ALIGNMENT);
+			ActionWindow.add(AttackButton);
+			AttackButton.setBounds(15, 15, 200, 30);
+			
+		}
+		else
+		{
+			if(!Loc.isEmpty()){
+				AttackButton = new JButton("Attack " + Enemy.getName() + " " + Enemy.getType());
+				abHandler = new AttackButtonHandler();
+				AttackButton.addActionListener(abHandler);
+				AttackButton.setAlignmentX(CENTER_ALIGNMENT);
+				ActionWindow.add(AttackButton);}
+				AttackButton.setBounds(15, 15, 200, 30);
+			switch(Loc.getDoors()){
+			case 0000:
+				break;
+			case 0001:
+				//West
+				setWest(true);
+				WestButton = new JButton("Go Left");
+				wbHandler = new WestButtonHandler();
+				WestButton.addActionListener(wbHandler);
+				ActionWindow.add(WestButton);
+				break;
+			case 0010:
+				//East
+				setEast(true);
+				EastButton = new JButton("Go Right");
+				ebHandler = new EastButtonHandler();
+				EastButton.addActionListener(ebHandler);
+				ActionWindow.add(EastButton);
+				break;
+			case 0011:
+				//East
+				setEast(true);
+				EastButton = new JButton("Go Right");
+				ebHandler = new EastButtonHandler();
+				EastButton.addActionListener(ebHandler);
+				ActionWindow.add(EastButton);
+				//West
+				setWest(true);
+				WestButton = new JButton("Go Left");
+				wbHandler = new WestButtonHandler();
+				WestButton.addActionListener(wbHandler);
+				ActionWindow.add(WestButton);
+				break;
+			case 0100:
+				//South
+				setSouth(true);
+				SouthButton = new JButton("Go Back");
+				sbHandler = new SouthButtonHandler();
+				SouthButton.addActionListener(sbHandler);
+				ActionWindow.add(SouthButton);
+				break;
+			case 0101:
+				//South
+				setSouth(true);
+				SouthButton = new JButton("Go Back");
+				sbHandler = new SouthButtonHandler();
+				SouthButton.addActionListener(sbHandler);
+				ActionWindow.add(SouthButton);
+				//West
+				setWest(true);
+				WestButton = new JButton("Go Left");
+				wbHandler = new WestButtonHandler();
+				WestButton.addActionListener(wbHandler);
+				ActionWindow.add(WestButton);
+				break;
+			case 0110:
+				//South
+				setSouth(true);
+				SouthButton = new JButton("Go Back");
+				sbHandler = new SouthButtonHandler();
+				SouthButton.addActionListener(sbHandler);
+				ActionWindow.add(SouthButton);
+				//East
+				setEast(true);
+				EastButton = new JButton("Go Right");
+				ebHandler = new EastButtonHandler();
+				EastButton.addActionListener(ebHandler);
+				ActionWindow.add(EastButton);
+				break;
+			case 0111:
+				//South
+				setSouth(true);
+				SouthButton = new JButton("Go Back");
+				sbHandler = new SouthButtonHandler();
+				SouthButton.addActionListener(sbHandler);
+				ActionWindow.add(SouthButton);
+				//East
+				setEast(true);
+				EastButton = new JButton("Go Right");
+				ebHandler = new EastButtonHandler();
+				EastButton.addActionListener(ebHandler);
+				ActionWindow.add(EastButton);
+				//West
+				setWest(true);
+				WestButton = new JButton("Go Left");
+				wbHandler = new WestButtonHandler();
+				WestButton.addActionListener(wbHandler);
+				ActionWindow.add(WestButton);
+				break;
+			case 1000:
+				//North
+				setNorth(true);
+				NorthButton = new JButton("Move Forward");
+				nbHandler = new NorthButtonHandler();
+				NorthButton.addActionListener(nbHandler);
+				ActionWindow.add(NorthButton);
+				break;
+			case 1001:
+				//North
+				setNorth(true);
+				NorthButton = new JButton("Move Forward");
+				nbHandler = new NorthButtonHandler();
+				NorthButton.addActionListener(nbHandler);
+				ActionWindow.add(NorthButton);
+				//West
+				setWest(true);
+				WestButton = new JButton("Go Left");
+				wbHandler = new WestButtonHandler();
+				WestButton.addActionListener(wbHandler);
+				ActionWindow.add(WestButton);
+				break;
+			case 1010:
+				//North
+				setNorth(true);
+				NorthButton = new JButton("Move Forward");
+				nbHandler = new NorthButtonHandler();
+				NorthButton.addActionListener(nbHandler);
+				ActionWindow.add(NorthButton);
+				//East
+				setEast(true);
+				EastButton = new JButton("Go Right");
+				ebHandler = new EastButtonHandler();
+				EastButton.addActionListener(ebHandler);
+				ActionWindow.add(EastButton);
+				break;
+			case 1011:
+				//North
+				setNorth(true);
+				NorthButton = new JButton("Move Forward");
+				nbHandler = new NorthButtonHandler();
+				NorthButton.addActionListener(nbHandler);
+				ActionWindow.add(NorthButton);
+				//East
+				setEast(true);
+				EastButton = new JButton("Go Right");
+				ebHandler = new EastButtonHandler();
+				EastButton.addActionListener(ebHandler);
+				ActionWindow.add(EastButton);
+				//West
+				setWest(true);
+				WestButton = new JButton("Go Left");
+				wbHandler = new WestButtonHandler();
+				WestButton.addActionListener(wbHandler);
+				ActionWindow.add(WestButton);
+				break;
+			case 1100:
+				//North
+				setNorth(true);
+				NorthButton = new JButton("Move Forward");
+				nbHandler = new NorthButtonHandler();
+				NorthButton.addActionListener(nbHandler);
+				ActionWindow.add(NorthButton);
+				//South
+				setSouth(true);
+				SouthButton = new JButton("Go Back");
+				sbHandler = new SouthButtonHandler();
+				SouthButton.addActionListener(sbHandler);
+				ActionWindow.add(SouthButton);
+				break;
+			case 1101:
+				//North
+				setNorth(true);
+				NorthButton = new JButton("Move Forward");
+				nbHandler = new NorthButtonHandler();
+				NorthButton.addActionListener(nbHandler);
+				ActionWindow.add(NorthButton);
+				//South
+				setSouth(true);
+				SouthButton = new JButton("Go Back");
+				sbHandler = new SouthButtonHandler();
+				SouthButton.addActionListener(sbHandler);
+				ActionWindow.add(SouthButton);
+				//West
+				setWest(true);
+				WestButton = new JButton("Go Left");
+				wbHandler = new WestButtonHandler();
+				WestButton.addActionListener(wbHandler);
+				ActionWindow.add(WestButton);
+				break;
+			case 1111:
+				//North
+				setNorth(true);
+				NorthButton = new JButton("Move Forward");
+				nbHandler = new NorthButtonHandler();
+				NorthButton.addActionListener(nbHandler);
+				ActionWindow.add(NorthButton);
+				//South
+				setSouth(true);
+				SouthButton = new JButton("Go Back");
+				sbHandler = new SouthButtonHandler();
+				SouthButton.addActionListener(sbHandler);
+				ActionWindow.add(SouthButton);
+				//East
+				setEast(true);
+				EastButton = new JButton("Go Right");
+				ebHandler = new EastButtonHandler();
+				EastButton.addActionListener(ebHandler);
+				ActionWindow.add(EastButton);
+				//West
+				setWest(true);
+				WestButton = new JButton("Go Left");
+				wbHandler = new WestButtonHandler();
+				WestButton.addActionListener(wbHandler);
+				ActionWindow.add(WestButton);
+				break;
+			}
+			
+			
+			
+				
+		}
+		if(isNorth())
+			NorthButton.setBounds(195, 60, 150, 30);
+		if(isSouth())
+			SouthButton.setBounds(195, 150, 150, 30);
+		if(isWest())
+			WestButton.setBounds(170, 105, 100, 30);
+		if(isEast())
+			EastButton.setBounds(270, 105, 100, 30);
 		
-		ActionWindow.add(ActionButton);
 		
 		ActionWindow.revalidate();
 		ActionWindow.repaint();
+	}
+	
+	public void RemoveDirectionButtons(){
+		if(isNorth()){
+			setNorth(false);
+			ActionWindow.remove(NorthButton);}
+		if(isSouth()){
+			setSouth(false);
+			ActionWindow.remove(SouthButton);}
+		if(isEast()){
+			setEast(false);
+			ActionWindow.remove(EastButton);}
+		if(isWest()){
+			setWest(false);
+			ActionWindow.remove(WestButton);}
 	}
 
 	public void UpdateWeaponSwap(){
@@ -379,10 +742,11 @@ public class MisAdventuresGameLayout extends JFrame {
 		game.setResizable(false);
 	}
 
-	// Start Button Action
-	private class ActionButtonHandler implements ActionListener {
+	// Attack Button Action
+	private class AttackButtonHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			int ArmourDurability = 11;
+<<<<<<< HEAD
 <<<<<<< HEAD
 			p1.DamagePlayerHealth(DamageTaken);
 			p1.DamagePlayerArmour(DamageArmour, ArmourDurability);
@@ -397,11 +761,55 @@ public class MisAdventuresGameLayout extends JFrame {
 			p1.DamagePlayerArmour(Enemy.getDamage(), ArmourDurability);
 			PlayerInfo.remove(ActionButton);
 >>>>>>> 5d9bf0fbec608c25d0bfc8e4506d43ac7f5f568b
+=======
+			setInCombat(true);
+			setPlayerDamage(Attack.PlayerAttack(Weapon.getSpeed(), Weapon.getDamage(), Enemy.getSpeed()));
+			Enemy.AttackEnemyHealth(getPlayerDamage());
+			Enemy.AttackEnemyArmour(getPlayerDamage());
+			setEnemyDamage(Attack.EnemyAttack(Enemy.getDamage(), Enemy.getSpeed()));
+			p1.DamagePlayerHealth(getEnemyDamage());
+			p1.DamagePlayerArmour(getEnemyDamage(), ArmourDurability, Attack.isEvade());
+			ActionWindow.remove(AttackButton);
+			RemoveDirectionButtons();
+			if(Enemy.getHealth()==0){
+				setInCombat(false);
+				Loc.setEmpty(true);
+				Enemy.setArmour(0);
+			}
+			if(p1.getPlayerHealth()==0)
+				setAlive(false);
+>>>>>>> e1498fc4c9d248a9503e32cf4f064d0e335f628b
 			UpdatePlayerStats();
 			UpdateEncounter();
+			UpdateStoryWindow();
+			UpdateActionWindow();
 
 		}
 	}
+	
+	// North Button Action
+	private class NorthButtonHandler implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			}
+		}
+	
+	// East Button Action
+	private class EastButtonHandler implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			}
+		}
+	
+	// South Button Action
+	private class SouthButtonHandler implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			}
+		}
+	
+	// West Button Action
+	private class WestButtonHandler implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			}
+		}
 	
 	// Weapon Swap Class
 	private class WeaponSelectHandler implements ActionListener{
