@@ -1,7 +1,11 @@
 
 public class Player {
 	
+<<<<<<< HEAD
 	private int PlayerHealth, PlayerMaxHealth, PlayerArmour, PlayerMaxArmour, PlayerArmourStrength, PlayerCurrentPosition;
+=======
+	private int PlayerHealth, PlayerMaxHealth, PlayerArmour, PlayerMaxArmour, PlayerArmourStrength, PlayerWeapon;
+>>>>>>> 5d9bf0fbec608c25d0bfc8e4506d43ac7f5f568b
 		
 	public Player(int playerHealth, int playerMaxHealth, int playerArmour, int playerMaxArmour, int playerArmourStrength)
 	{
@@ -10,11 +14,17 @@ public class Player {
 		PlayerArmour = playerArmour;
 		PlayerMaxArmour = playerMaxArmour;
 		PlayerArmourStrength = playerArmourStrength;
+<<<<<<< HEAD
 		PlayerCurrentPosition = 0;
+=======
+		PlayerWeapon = 0;
+>>>>>>> 5d9bf0fbec608c25d0bfc8e4506d43ac7f5f568b
 	}
 	
 	
 	//Getters and Setters for PlayerStats
+	public int getPlayerWeapon() {return this.PlayerWeapon;}
+	public void setPlayerWeapon(int PlayerWeapon){this.PlayerWeapon = PlayerWeapon;}
 	public int getPlayerHealth() {return this.PlayerHealth;}
 	public void setPlayerHealth(int playerHealth) {this.PlayerHealth = playerHealth;}
 	public int getPlayerMaxHealth() {return this.PlayerMaxHealth;}
@@ -73,20 +83,4 @@ public class Player {
 		
 		return PlayerArmour;
 	}
-	
-	public String HealthBar(double max, double current){
-		double Upper = (Math.round((current/max)*10))*2;
-		double Lower = 20-Upper;
-		String tempFull = "#########################################################";
-		String tempEmpty = "______________________________________________________";
-		tempFull = tempFull.substring(0, (int) Upper);
-		tempEmpty = tempEmpty.substring(0, (int) Lower);
-		String bar = tempFull.concat(tempEmpty);
-				
-		return bar;
-	}
-	
-
-
-
 }
