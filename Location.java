@@ -58,7 +58,7 @@ public class Location {
 			room = "Entrance Way";
 			Empty = false;
 			EnemyID = 1;
-			Doors = 1001;
+			Doors = 1111;
 			break;
 		}
 	}
