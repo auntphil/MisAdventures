@@ -84,7 +84,16 @@ public class MisAdventuresGameLayout extends JFrame {
 	int parmour = 50;
 	int pamax = 50;
 	int pamstr = 11;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	Player p1 = new Player(phealth, phmax, parmour, pamax, pamstr);
+	Location l1 = new Location();
+=======
+>>>>>>> 5d9bf0fbec608c25d0bfc8e4506d43ac7f5f568b
+	
+=======
 
+>>>>>>> e1498fc4c9d248a9503e32cf4f064d0e335f628b
 	//constructors
 	Player p1 = new Player(phealth, phmax, parmour, pamax, pamstr);
 	Location Loc = new Location();
@@ -737,6 +746,22 @@ public class MisAdventuresGameLayout extends JFrame {
 	private class AttackButtonHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			int ArmourDurability = 11;
+<<<<<<< HEAD
+<<<<<<< HEAD
+			p1.DamagePlayerHealth(DamageTaken);
+			p1.DamagePlayerArmour(DamageArmour, ArmourDurability);
+			p1.DisplayCurrentPosition();
+			//l1.levelTraversal(p1);
+			PlayerInfo.remove(calculateB);
+=======
+			int Damage = Attack.PlayerAttack(Weapon.getSpeed(), Weapon.getDamage(), Enemy.getSpeed());
+			Enemy.AttackEnemyHealth(Damage);
+			Enemy.AttackEnemyArmour(Damage);
+			p1.DamagePlayerHealth(Enemy.getDamage());
+			p1.DamagePlayerArmour(Enemy.getDamage(), ArmourDurability);
+			PlayerInfo.remove(ActionButton);
+>>>>>>> 5d9bf0fbec608c25d0bfc8e4506d43ac7f5f568b
+=======
 			setInCombat(true);
 			setPlayerDamage(Attack.PlayerAttack(Weapon.getSpeed(), Weapon.getDamage(), Enemy.getSpeed()));
 			Enemy.AttackEnemyHealth(getPlayerDamage());
@@ -753,6 +778,7 @@ public class MisAdventuresGameLayout extends JFrame {
 			}
 			if(p1.getPlayerHealth()==0)
 				setAlive(false);
+>>>>>>> e1498fc4c9d248a9503e32cf4f064d0e335f628b
 			UpdatePlayerStats();
 			UpdateEncounter();
 			UpdateStoryWindow();

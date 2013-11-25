@@ -1,7 +1,11 @@
 
 public class Player {
 	
+<<<<<<< HEAD
+	private int PlayerHealth, PlayerMaxHealth, PlayerArmour, PlayerMaxArmour, PlayerArmourStrength, PlayerCurrentPosition;
+=======
 	private int PlayerHealth, PlayerMaxHealth, PlayerArmour, PlayerMaxArmour, PlayerArmourStrength, PlayerWeapon;
+>>>>>>> 5d9bf0fbec608c25d0bfc8e4506d43ac7f5f568b
 		
 	public Player(int playerHealth, int playerMaxHealth, int playerArmour, int playerMaxArmour, int playerArmourStrength)
 	{
@@ -10,7 +14,11 @@ public class Player {
 		PlayerArmour = playerArmour;
 		PlayerMaxArmour = playerMaxArmour;
 		PlayerArmourStrength = playerArmourStrength;
+<<<<<<< HEAD
+		PlayerCurrentPosition = 0;
+=======
 		PlayerWeapon = 0;
+>>>>>>> 5d9bf0fbec608c25d0bfc8e4506d43ac7f5f568b
 	}
 	
 	
@@ -27,12 +35,19 @@ public class Player {
 	public void setPlayerMaxArmour(int playerMaxArmour) {this.PlayerMaxArmour = playerMaxArmour;}
 	public int getPlayerArmourStrenth() {return this.PlayerArmourStrength;}
 	public void setPlayerArmourStrength(int playerArmourStrength) {this.PlayerArmourStrength = playerArmourStrength;}
+	public int getPlayerCurrentPosition() {return this.PlayerCurrentPosition;}
+	public void setPlayerCurrentPosition(int playerCurrentPosition) {this.PlayerCurrentPosition = playerCurrentPosition;}
 	
 	
 	public void Damage()//(/*int health, int max, int armour, int armourMax*/)
 	{
 		//System.out.println(getPlayerHealth());
 		PlayerHealth = PlayerHealth - 10;
+	}
+	
+	public void DisplayCurrentPosition()
+	{
+		System.out.println("Players Current Position: " + PlayerCurrentPosition);
 	}
 	
 	public int DamagePlayerHealth(int damage)
